@@ -22,6 +22,7 @@ class AURA_API AAuraPlayerState : public APlayerState, public IAbilitySystemInte
 	
 public:
 	AAuraPlayerState();
+	
 
 	// Ability System Interface Function override
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
