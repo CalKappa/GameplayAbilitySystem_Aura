@@ -2,6 +2,7 @@
 
 
 #include "UI/WidgetController/OverlayWidgetController.h"
+#include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystem/AuraAttributeSet.h"
 
 void UOverlayWidgetController::BroadcastInitialValues()
@@ -37,6 +38,20 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
 		AuraAttributeSet->GetMaxManaAttribute()).AddUObject(this, &UOverlayWidgetController::MaxManaChanged);
+
+	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->EffectAssetTags.AddLambda(
+		[](const FGameplayTagContainer& AssetTags)
+		{
+			for (FGameplayTag Tag : AssetTags)
+			{
+				// Lets check a debug message to make sure everything is working accordingly before we try do the broadcast
+				// This will only work once we have added some tags to our gameplay effects
+				const FString Msg = FString::Printf(TEXT("GE Tag: %s"), *Tag.ToString());
+				GEngine->AddOnScreenDebugMessage(-1, 8.f, FColor::Blue, Msg);
+			}
+		}
+	
+	);
 	
 }
 
