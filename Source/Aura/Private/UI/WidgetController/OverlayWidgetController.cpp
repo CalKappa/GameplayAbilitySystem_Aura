@@ -46,8 +46,9 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 			{
 				// Lets check a debug message to make sure everything is working accordingly before we try do the broadcast
 				// This will only work once we have added some tags to our gameplay effects
-				const FString Msg = FString::Printf(TEXT("GE Tag: %s"), *Tag.ToString());
-				GEngine->AddOnScreenDebugMessage(-1, 8.f, FColor::Blue, Msg);
+				// const FString Msg = FString::Printf(TEXT("GE Tag: %s"), *Tag.ToString());
+				// GEngine->AddOnScreenDebugMessage(-1, 8.f, FColor::Blue, Msg);
+				GetDataTableRowByTag<FUIWidgetRow>(MessageWidgetDataTable, Tag);
 			}
 		}
 	
