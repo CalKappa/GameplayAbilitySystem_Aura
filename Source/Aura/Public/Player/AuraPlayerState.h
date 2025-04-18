@@ -31,7 +31,7 @@ public:
 
 protected:
 	// Ability System pointers
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 
 	UPROPERTY()
