@@ -36,26 +36,33 @@ void AAuraCharacterBase::InitAbilityActorInfo()
 
 }
 
-void AAuraCharacterBase::InitilizePrimaryAttributes() const
+void AAuraCharacterBase::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level) const
 {
 	// This will be called in different places depending on whos stats you are initializing
 	// For this project 
 		// In AuraCharacter we will call this in the InitAbilityActorInfo()
-	
-	
+
 	// If you need to get a Gameplay Effect Spec Handle, follow these steps to create it
-	
+
 	// 1) Check that the Ability System component and the default primnary attributes are set up and are not null
 	check(IsValid(GetAbilitySystemComponent()));
-	check(DefaultPrimaryAttributes);
+	check(GameplayEffectClass);
 
 	// 2) Get the FGameplayEffectContextHandle from the Ability System Component
 	const FGameplayEffectContextHandle ContextHandle = GetAbilitySystemComponent()->MakeEffectContext();
 	// 3) Get the Gameplay Effect Spec Handle from the Ability System component, passing in the UGameplayEffect variable you created and the ContextHandle from step 1
-	const FGameplayEffectSpecHandle SpecHandle = GetAbilitySystemComponent()->MakeOutgoingSpec(DefaultPrimaryAttributes, 1, ContextHandle);
+	const FGameplayEffectSpecHandle SpecHandle = GetAbilitySystemComponent()->MakeOutgoingSpec(GameplayEffectClass, Level, ContextHandle);
 
 	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*SpecHandle.Data.Get(), GetAbilitySystemComponent());
 }
+
+void AAuraCharacterBase::InitializeDefaultAttributes() const
+{
+	ApplyEffectToSelf(DefaultPrimaryAttributes, 1);
+	ApplyEffectToSelf(DefaultSecondaryAttributes, 1);
+}
+
+
 
 
 
